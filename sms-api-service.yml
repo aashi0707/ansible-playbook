@@ -1,0 +1,15 @@
+---
+ - hosts: localhost
+   tasks:  
+    - name: collect facts about system services
+      shell: /usr/bin/systemctl is-active redis
+      ignore_errors: yes
+      register: result
+    - debug: var=result
+    - uri:
+        url: http://m1.sarv.com/api/v2.0/sms_campaign.php?token=6936881495d56a81e5e5613.32766479&user_id=72178322&route=TR&template_id=1775&sender_id=SARVSM&language=EN&template=Hello+Team%2C%0D%0APlease+check+your+mail.+You+have+received+the+mail+of+service+down+alert.%0D%0A%0D%0ARegards%21%0D%0AAashi&contact_numbers=7791097094
+        method: POST
+        status_code: 200
+        body_format: json
+      when: result.stdout == "inactive"
+
