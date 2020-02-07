@@ -1,0 +1,164 @@
+---
+ - hosts: 103.255.100.152
+   tasks:
+    - name: check hostname
+      shell: echo $HOSTNAME
+      register: result
+    - debug:
+       var: ansible_hostname
+
+    - name: Give hostname
+      shell: hostname "app4.in.sarv.email"
+      when: 
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.255.100.152'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.255.100.152	app4.in.sarv.email'
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.255.100.152' 
+
+
+ - hosts: 103.255.101.92
+   tasks:
+    - name: check hostname
+      shell: echo $HOSTNAME
+      register: result
+    - debug:
+       var: ansible_hostname
+
+    - name: Give hostname
+      shell: hostname "manage.inbox18.com"
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.255.101.92'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.255.101.92  manage.inbox18.com'     
+      when: 
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.255.101.92'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.255.101.93	app.inbox18.com'     
+      when: 
+       - ansible_hostname == 'manage.inbox18.com'
+       - ansible_all_ipv4_addresses == '103.255.101.92'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.255.101.94	link.inbox18.com'   
+      when:
+       - ansible_hostname == 'manage.inbox18.com'
+       - ansible_all_ipv4_addresses == '103.255.101.92'
+
+
+
+ - hosts: 103.238.220.18
+   tasks:
+    - name: check hostname
+      shell: echo $HOSTNAME
+      register: result
+    - debug:
+       var: ansible_hostname
+
+    - name: Give hostname
+      shell: hostname "manage.mgage.solutions"
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.238.220.18'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.238.220.18   manage.mgage.solutions'   
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.238.220.18'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.238.220.19   app.mgage.solutions'   
+      when:
+        - ansible_hostname == 'manage.mgage.solutions'
+        - ansible_all_ipv4_addresses == '103.238.220.18'
+  
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.238.220.20   link.mgage.solutions'
+       when:
+        - ansible_hostname == 'manage.mgage.solutions'
+        - ansible_all_ipv4_addresses == '103.238.220.18'
+
+
+ - hosts: 103.255.100.59
+   tasks:
+    - name: check hostname
+      shell: echo $HOSTNAME
+      register: result
+    - debug:
+       var: ansible_hostname
+
+    - name: Give hostname
+      shell: hostname "master.sarvmail.net"
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.255.100.59'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.255.100.59 master.sarvmail.net'
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.255.100.59'
+
+
+ - hosts: 103.238.223.115
+   tasks:
+    - name: check hostname
+      shell: echo $HOSTNAME
+      register: result
+    - debug:
+       var: ansible_hostname
+
+    - name: Give hostname
+      shell: hostname "master.sarvmail.com"
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.238.223.115'
+
+    - lineinfile:
+        path: /etc/hosts
+        insertafter: '::1         localhost localhost.localdomain localhost6 localhost6.localdomain6'
+        line: '103.238.223.115 master.sarvmail.com'
+      when:
+       - ansible_hostname == 'localhost.localdomain'
+       - ansible_all_ipv4_addresses == '103.238.223.115'
+
+
+
+
+
+
+
+
+
+
+
+ #  - lineinfile:
+     #  dest: /etc/hosts
+     #  regexp: '^127\.0\.0\.1[ \t]+localhost'
+     #  line: '127.0.0.1 helloworld.com'
+     #  state: present
+
