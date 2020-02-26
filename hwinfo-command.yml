@@ -1,0 +1,48 @@
+---
+ - hosts: all
+   tasks:
+    - file:
+        path: /root/{{ ansible_default_ipv4.address }}.txt
+        state: touch
+        force: yes
+    - name: Install packages in Centos
+      yum:
+        name:
+         - hwinfo
+         - dmidecode
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'  
+
+    - name: Install packages in Ubuntu
+      apt:
+        name:
+         - hwinfo
+         - dmidecode
+        state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+
+    - shell: echo "{{ ansible_default_ipv4.address }}"
+      register: output1
+
+    - shell: hwinfo  | grep -A 28 -w "SMBIOS Version"
+      register: output2
+
+    - shell: dmidecode -t 39
+      register: output3
+
+    - name: Add lines in file.txt
+      blockinfile:
+         path: /root/{{ ansible_default_ipv4.address }}.txt
+         block: |
+             "{{ output1.stdout }}"
+             "{{ output2.stdout }}"
+             "{{ output3.stdout }}"
+
+
+    - name: Remotely fetch the file to local
+      fetch:
+        src: /root/{{ ansible_default_ipv4.address }}.txt
+        dest: /home/aashi/
+
+
